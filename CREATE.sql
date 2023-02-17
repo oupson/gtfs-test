@@ -108,9 +108,6 @@ CREATE TABLE STOP_TIME
     stopTimeSequence           INTEGER     NOT NULL,
     stopTimeArrival            VARCHAR(8)  NULL,
     stopTimeDeparture          VARCHAR(8)  NULL,
-    stopTimeRealtimeArrival    INTEGER     NULL     DEFAULT NULL, -- TODO Type
-    stopTimeRealtimeDeparture  INTEGER     NULL     DEFAULT NULL, -- TODO Type
-    stopTimeRealtimeIsCanceled BOOLEAN     NOT NULL DEFAULT FALSE,
     CONSTRAINT PK_STOP_TIME PRIMARY KEY (stopTimeStopId, stopTimeTripId, stopTimeSequence),
     CONSTRAINT FK_STOP_TIME_STOP FOREIGN KEY (stopTimeStopId) REFERENCES STOP (stopId),
     CONSTRAINT FK_STOP_TIME_TRIP FOREIGN KEY (stopTimeTripId) REFERENCES TRIP (tripId)
