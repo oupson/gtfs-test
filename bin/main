@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'gtfs'
+
+data = Gtfs::GtfsData.new
+data.import_data

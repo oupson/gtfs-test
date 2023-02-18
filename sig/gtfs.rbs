@@ -1,0 +1,11 @@
+module Gtfs
+  VERSION: String
+
+  # See the writing guide of rbs: https://github.com/ruby/rbs#guides
+
+  class GtfsData
+    def initialize: (db_path: string, gtfs_uri: URI) -> void
+
+    def import_data: -> void
+  end
+end
