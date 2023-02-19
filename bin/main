@@ -1,6 +1,15 @@
 #!/usr/bin/env ruby
 
 require 'gtfs'
+require "thor"
 
-data = Gtfs::GtfsData.new
-data.import_data
+class GtfsCLI < Thor
+  desc "update_database", "Update the database using GTFS"
+
+  def update_database
+    data = Gtfs::GtfsData.new
+    data.import_data
+  end
+end
+
+GtfsCLI.start(ARGV)
