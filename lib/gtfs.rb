@@ -14,16 +14,15 @@ module Gtfs
   # Your code goes here...
 
   class GtfsData
-    def initialize(db_path = 'data.db', gtfs_uri = URI.parse(ENV['GTFS_URL']))
-      @gtfs_uri = gtfs_uri
+    def initialize(db_path = 'data.db')
       @db = SQLite3::Database.new db_path
     end
 
-    def import_data
+    def import_data(gtfs_uri)
       puts 'Downloading file ...'
-      Net::HTTP.start(@gtfs_uri.host, @gtfs_uri.port,
-                      use_ssl: @gtfs_uri.scheme == 'https') do |http|
-        request = Net::HTTP::Get.new @gtfs_uri
+      Net::HTTP.start(gtfs_uri.host, gtfs_uri.port,
+                      use_ssl: gtfs_uri.scheme == 'https') do |http|
+        request = Net::HTTP::Get.new gtfs_uri
 
         http.request request do |response|
           File.open('gtfs.zip', 'w') do |f|
@@ -63,8 +62,8 @@ module Gtfs
       p = ProgressBar.create(title: 'Calendars', total: calendars.length)
       @db.transaction do
         calendars.each do |a|
-          @db.execute 'insert into CALENDAR (serviceId, isServingMonday, isServingTuesday, isServingWednesday, isServingThursday, isServingFriday, isServingSaturday, isServingSunday) values (?, ?, ?, ?, ?, ?, ?, ?);',
-                      a['service_id'], a['monday'], a['tuesday'], a['wednesday'], a['thursday'], a['friday'], a['saturday'], a['sunday'] #,start_date,end_date
+          @db.execute 'insert into CALENDAR (serviceId, isServingMonday, isServingTuesday, isServingWednesday, isServingThursday, isServingFriday, isServingSaturday, isServingSunday, calendarStartDate, calendarEndDate) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+                      a['service_id'], a['monday'], a['tuesday'], a['wednesday'], a['thursday'], a['friday'], a['saturday'], a['sunday'], a['start_date'], a['end_date']
           p.increment
         end
       end

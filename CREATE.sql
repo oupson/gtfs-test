@@ -39,6 +39,8 @@ CREATE TABLE CALENDAR
     isServingFriday    BOOLEAN     NOT NULL,
     isServingSaturday  BOOLEAN     NOT NULL,
     isServingSunday    BOOLEAN     NOT NULL,
+    calendarStartDate  VARCHAR(8)  NOT NULL,
+    calendarEndDate    VARCHAR(8)  NOT NULL,
     CONSTRAINT PK_CALENDAR PRIMARY KEY (serviceId)
 );
 
@@ -103,11 +105,11 @@ CREATE TABLE TRIP
 
 CREATE TABLE STOP_TIME
 (
-    stopTimeStopId             VARCHAR(42) NOT NULL,
-    stopTimeTripId             VARCHAR(42) NOT NULL,
-    stopTimeSequence           INTEGER     NOT NULL,
-    stopTimeArrival            VARCHAR(8)  NULL,
-    stopTimeDeparture          VARCHAR(8)  NULL,
+    stopTimeStopId    VARCHAR(42) NOT NULL,
+    stopTimeTripId    VARCHAR(42) NOT NULL,
+    stopTimeSequence  INTEGER     NOT NULL,
+    stopTimeArrival   VARCHAR(8)  NULL,
+    stopTimeDeparture VARCHAR(8)  NULL,
     CONSTRAINT PK_STOP_TIME PRIMARY KEY (stopTimeStopId, stopTimeTripId, stopTimeSequence),
     CONSTRAINT FK_STOP_TIME_STOP FOREIGN KEY (stopTimeStopId) REFERENCES STOP (stopId),
     CONSTRAINT FK_STOP_TIME_TRIP FOREIGN KEY (stopTimeTripId) REFERENCES TRIP (tripId)
@@ -116,6 +118,6 @@ CREATE TABLE STOP_TIME
 CREATE TABLE GTFS_FILE
 (
     gtfsFileName TEXT    NOT NULL,
-    gtfsFileCrc      INTEGER NOT NULL,
+    gtfsFileCrc  INTEGER NOT NULL,
     CONSTRAINT PK_GTFS_FILE PRIMARY KEY (gtfsFileName)
 );

@@ -8,7 +8,7 @@ class GtfsCLI < Thor
 
   def update_database
     data = Gtfs::GtfsData.new
-    data.import_data
+    data.import_data URI.parse(ENV['GTFS_URL'])
   end
 end
 
