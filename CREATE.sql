@@ -1,4 +1,3 @@
-
 DROP TABLE IF EXISTS STOP_TIME;
 
 DROP TABLE IF EXISTS TRIP;
@@ -8,6 +7,8 @@ DROP TABLE IF EXISTS STOP;
 DROP TABLE IF EXISTS SHAPE;
 
 DROP TABLE IF EXISTS ROUTE;
+
+DROP TABLE IF EXISTS CALENDAR_DAY;
 
 DROP TABLE IF EXISTS CALENDAR_DATE;
 
@@ -31,17 +32,18 @@ CREATE TABLE AGENCY
 -- TODO START AND END DATE
 CREATE TABLE CALENDAR
 (
-    serviceId          VARCHAR(42) NOT NULL,
-    isServingMonday    BOOLEAN     NOT NULL,
-    isServingTuesday   BOOLEAN     NOT NULL,
-    isServingWednesday BOOLEAN     NOT NULL,
-    isServingThursday  BOOLEAN     NOT NULL,
-    isServingFriday    BOOLEAN     NOT NULL,
-    isServingSaturday  BOOLEAN     NOT NULL,
-    isServingSunday    BOOLEAN     NOT NULL,
-    calendarStartDate  VARCHAR(8)  NOT NULL,
-    calendarEndDate    VARCHAR(8)  NOT NULL,
+    serviceId         VARCHAR(42) NOT NULL,
+    calendarStartDate VARCHAR(8)  NOT NULL,
+    calendarEndDate   VARCHAR(8)  NOT NULL,
     CONSTRAINT PK_CALENDAR PRIMARY KEY (serviceId)
+);
+
+CREATE TABLE CALENDAR_DAY
+(
+    calendarDayServiceId VARCHAR(42) NOT NULL,
+    calendarDay          SMALLINT    NOT NULL,
+    CONSTRAINT PK_CALENDAR_DAY PRIMARY KEY (calendarDayServiceId, calendarDay),
+    CONSTRAINT FK_CALENDAR_DAY_CALENDAR FOREIGN KEY (calendarDayServiceId) REFERENCES CALENDAR (serviceId)
 );
 
 CREATE TABLE CALENDAR_DATE

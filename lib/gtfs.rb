@@ -62,8 +62,44 @@ module Gtfs
       p = ProgressBar.create(title: 'Calendars', total: calendars.length)
       @db.transaction do
         calendars.each do |a|
-          @db.execute 'insert into CALENDAR (serviceId, isServingMonday, isServingTuesday, isServingWednesday, isServingThursday, isServingFriday, isServingSaturday, isServingSunday, calendarStartDate, calendarEndDate) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
-                      a['service_id'], a['monday'], a['tuesday'], a['wednesday'], a['thursday'], a['friday'], a['saturday'], a['sunday'], a['start_date'], a['end_date']
+          @db.execute 'insert into CALENDAR (serviceId, calendarStartDate, calendarEndDate) values (?, ?, ?);',
+                      a['service_id'], a['start_date'], a['end_date']
+
+          if a['monday'] == '1'
+            @db.execute 'INSERT INTO CALENDAR_DAY(calendarDayServiceId, calendarDay) VALUES (?, ?)',
+                        a['service_id'], 0
+          end
+
+          if a['tuesday'] == '1'
+            @db.execute 'INSERT INTO CALENDAR_DAY(calendarDayServiceId, calendarDay) VALUES (?, ?)',
+                        a['service_id'], 1
+          end
+
+          if a['wednesday'] == '1'
+            @db.execute 'INSERT INTO CALENDAR_DAY(calendarDayServiceId, calendarDay) VALUES (?, ?)',
+                        a['service_id'], 2
+          end
+
+          if a['thursday'] == '1'
+            @db.execute 'INSERT INTO CALENDAR_DAY(calendarDayServiceId, calendarDay) VALUES (?, ?)',
+                        a['service_id'], 3
+          end
+
+          if a['friday'] == '1'
+            @db.execute 'INSERT INTO CALENDAR_DAY(calendarDayServiceId, calendarDay) VALUES (?, ?)',
+                        a['service_id'], 4
+          end
+
+          if a['saturday'] == '1'
+            @db.execute 'INSERT INTO CALENDAR_DAY(calendarDayServiceId, calendarDay) VALUES (?, ?)',
+                        a['service_id'], 5
+          end
+
+          if a['sunday'] == '1'
+            @db.execute 'INSERT INTO CALENDAR_DAY(calendarDayServiceId, calendarDay) VALUES (?, ?)',
+                        a['service_id'], 6
+          end
+
           p.increment
         end
       end
