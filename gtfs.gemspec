@@ -35,6 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'sqlite3', '~> 1.6'
   spec.add_dependency 'ruby-progressbar', '~> 1.11'
   spec.add_dependency 'thor', '~> 1.2'
+  spec.add_dependency 'terminal-table', '~> 3.0'
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html

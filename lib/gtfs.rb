@@ -202,6 +202,10 @@ module Gtfs
         end
       end
     end
+
+    def find_stop_by_name(stop_name)
+      return @db.query 'SELECT * FROM STOP WHERE stopName like ?', '%' + stop_name + '%'
+    end
   end
 end
 

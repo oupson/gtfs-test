@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 
 require 'gtfs'
-require "thor"
+require 'thor'
+require 'terminal-table'
 
 class GtfsCLI < Thor
   desc "update_database", "Update the database using GTFS"
@@ -9,6 +10,21 @@ class GtfsCLI < Thor
   def update_database
     data = Gtfs::GtfsData.new
     data.import_data URI.parse(ENV['GTFS_URL'])
+  end
+
+  desc 'find_stop', 'Find a stop'
+
+  def find_stop(stop_name)
+    data = Gtfs::GtfsData.new
+    stops = data.find_stop_by_name stop_name
+    rows = []
+    stops.each { |stop|
+      rows << [stop[0], stop[2], stop[4], stop[5]]
+    }
+
+    table = Terminal::Table.new :title => "Stop List",
+                                :headings => %w[Id Name Latitude Longitude], :rows => rows
+    puts table
   end
 end
 
